@@ -1,22 +1,19 @@
-import csv
-import os
+import os, csv
 
 # Files to load and output
 file_load = os.path.join("Resources", "election_data.csv")
 file_output = os.path.join("analysis", "election_analysis.txt")
 
-# Empty Counters
+# Empty counters
 total_votes = 0
-candidate_options = []
+candidates_list = []
 candidate_votes = {}
-winning_candidate = ""
 winning_count = 0
+winning_candidate = ""
 
 # Read the csv and convert it to a list of dictionaries
 with open(file_load) as election_data:
     reader = csv.reader(election_data)
-
-    # Read the header
     header = next(reader)
 
     for row in reader:
@@ -28,10 +25,10 @@ with open(file_load) as election_data:
         candidate_name = row[2]
 
         # If the candidate does not match any existing candidate...
-        if candidate_name not in candidate_options:
+        if candidate_name not in candidates_list:
 
             # Add it to list of candidates in the running
-            candidate_options.append(candidate_name)
+            candidates_list.append(candidate_name)
 
             # Start tracking that candidate's voter count
             candidate_votes[candidate_name] = 0
@@ -42,7 +39,7 @@ with open(file_load) as election_data:
 # Print the results and export the data to text file
 with open(file_output, "w") as txt_file:
 
-    # Print the final vote count (to terminal)
+    # Print the final vote count to terminal
     print(f"Total Votes: {total_votes}")
 
     # Save the final vote count to the text file
